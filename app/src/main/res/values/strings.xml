@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">DishApp</string>
+    <string name="dishListTitle">Список блюд</string>
+</resources>
