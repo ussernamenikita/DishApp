@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.DishApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.DishApp" parent="Theme.DishApp.Base">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
@@ -12,5 +12,9 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <item name="dishAppSkeletonColor">@color/gray_300</item>
+        <item name="dishAppSecondaryTextColor">@color/gray_600</item>
     </style>
+
+    <style name="Theme.DishApp.Base" parent="Theme.MaterialComponents.DayNight.NoActionBar" />
 </resources>

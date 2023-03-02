@@ -9,5 +9,5 @@
         android:name="com.dish.app.dishlist.ui.DishListFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout="@layout/dish_list_layout" />
+        tools:layout="@layout/dish_list_fragment_layout" />
 </FrameLayout>
