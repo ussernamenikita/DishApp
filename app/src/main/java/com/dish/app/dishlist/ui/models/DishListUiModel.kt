@@ -6,4 +6,5 @@ class DishListUiModel(
     val items: List<Item<*>>? = null,
     val isLoading: Boolean = true,
     val isError: Boolean = false,
+    val showDeleteButton: Boolean = false,
 )

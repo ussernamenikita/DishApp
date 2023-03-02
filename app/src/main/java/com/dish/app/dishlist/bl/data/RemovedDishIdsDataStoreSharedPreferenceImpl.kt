@@ -40,6 +40,7 @@ class RemovedDishIdsDataStoreSharedPreferenceImpl(context: Context) : RemovedDis
     private fun getRemovedIdsAsSet(): MutableSet<String> {
         return sharedPreferences
             .getStringSet(REMOVED_DISH_IDS_SHARED_PREFERENCES_KEY, emptySet())!!
+            .toMutableSet()
     }
 
 }

@@ -12,6 +12,8 @@ class DishReducerImpl : DishReducer {
             is DishListStore.Message.UpdateAllDishes -> updateAllDishes(currentState, message)
             DishListStore.Message.Loading -> setLoading(currentState)
             is DishListStore.Message.Error -> setError(currentState, message)
+            DishListStore.Message.ClearSelected -> currentState.copy(selectedDishIds = emptySet())
+            DishListStore.Message.RemovingInProgress -> currentState.copy(removingInProgress = true)
         }
     }
 
@@ -70,6 +72,6 @@ class DishReducerImpl : DishReducer {
                 it
             }
         }
-        return state.copy(dishesList = newDishesList)
+        return state.copy(dishesList = newDishesList, removingInProgress = false)
     }
 }

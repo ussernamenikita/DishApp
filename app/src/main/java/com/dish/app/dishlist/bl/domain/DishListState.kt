@@ -7,4 +7,5 @@ data class DishListState(
     val error: Throwable? = null,
     val isLoading: Boolean = true,
     val selectedDishIds: Set<String> = emptySet(),
+    val removingInProgress: Boolean = false,
 )

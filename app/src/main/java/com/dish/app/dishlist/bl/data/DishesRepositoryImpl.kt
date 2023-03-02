@@ -9,7 +9,17 @@ class DishesRepositoryImpl(
     private val entityToDomainModelMapper: DishEntityToDescriptionDomainModelMapper,
 ) : DishesRepository {
 
+    companion object {
+        private var FAIL_REQUEST_STEP: Int = 3
+    }
+
+    private var requestCounter: Int = 0
+
     override suspend fun getAllDishes(): List<DishDescriptionDomainModel> {
+        requestCounter++
+        if (requestCounter % FAIL_REQUEST_STEP == 0) {
+            error("Mocked internet exception")
+        }
         return dishDataStore
             .getDishes()
             .map(entityToDomainModelMapper::map)

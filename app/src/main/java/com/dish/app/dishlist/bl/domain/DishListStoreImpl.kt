@@ -95,8 +95,10 @@ class DishListStoreImpl constructor(
 
     private suspend fun delete() {
         execute {
+            dispatch(DishListStore.Message.RemovingInProgress)
             dishesRepository.addToRemoved(state.selectedDishIds)
             val newRemoved = dishesRepository.getRemovedDishIds()
+            dispatch(DishListStore.Message.ClearSelected)
             dispatch(DishListStore.Message.UpdateRemovedItems(newRemoved))
         }
     }

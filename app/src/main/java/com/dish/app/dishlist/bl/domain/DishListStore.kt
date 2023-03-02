@@ -10,6 +10,9 @@ interface DishListStore {
 
     sealed interface Message {
         object Loading : Message
+        object ClearSelected : Message
+        object RemovingInProgress : Message
+
         class UpdateRemovedItems(val newRemoved: Set<String>) : Message
         class SelectDish(val dishId: String, val selected: Boolean) : Message
         class UpdateAllDishes(val dishesDomainModels: List<DishDomainModel>) : Message
