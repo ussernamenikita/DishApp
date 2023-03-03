@@ -1,6 +1,5 @@
 package com.dish.app.dishlist.bl.domain
 
-import com.dish.app.dishlist.bl.data.DishesRepository
 import com.dish.app.dishlist.bl.domain.mappers.DishDescriptionToDishDomainModelMapper
 import com.dish.app.logger.Logger
 import com.dish.app.logger.LoggerExceptionHandler
@@ -17,14 +16,14 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 // TODO add Mvi-kotlin framework
-class DishListStoreImpl constructor(
+class DishListExecutorImpl constructor(
     private val dishesRepository: DishesRepository,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
     private val mainDispatcher: CoroutineDispatcher = Dispatchers.Main.immediate,
     private val reducer: DishReducer,
     private val dishDescriptionToDishDomainModelMapper: DishDescriptionToDishDomainModelMapper,
-    private val loggger: Logger,
-) : DishListStore {
+    private val logger: Logger,
+) : DishListExecutor {
 
     companion object {
         private const val LOG_TAG = "DishListStore"
@@ -67,7 +66,7 @@ class DishListStoreImpl constructor(
 
     private suspend fun requestAllDishes() {
         execute {
-            dispatch(DishListStore.Message.Loading)
+            dispatch(Message.Loading)
             val allDishesAsync = async {
                 kotlin.runCatching { dishesRepository.getAllDishes() }
             }
@@ -76,42 +75,42 @@ class DishListStoreImpl constructor(
             }
 
             val allDishes = allDishesAsync.await().getOrElse {
-                loggger.log(LOG_TAG, "Error while trying to get dish list", it)
-                dispatch(DishListStore.Message.Error(it))
+                logger.log(LOG_TAG, "Error while trying to get dish list", it)
+                dispatch(Message.Error(it))
                 return@execute
             }
             val removedDishes = removedDishesAsync.await().getOrElse {
-                loggger.log(LOG_TAG, "Error while trying to get removed dish list", it)
-                dispatch(DishListStore.Message.Error(it))
+                logger.log(LOG_TAG, "Error while trying to get removed dish list", it)
+                dispatch(Message.Error(it))
                 return@execute
             }
 
             val dishesDomainModels = allDishes.map {
                 dishDescriptionToDishDomainModelMapper.map(it, removedDishes)
             }
-            dispatch(DishListStore.Message.UpdateAllDishes(dishesDomainModels))
+            dispatch(Message.UpdateAllDishes(dishesDomainModels))
         }
     }
 
     private suspend fun delete() {
         execute {
-            dispatch(DishListStore.Message.RemovingInProgress)
+            dispatch(Message.RemovingInProgress)
             dishesRepository.addToRemoved(state.selectedDishIds)
             val newRemoved = dishesRepository.getRemovedDishIds()
-            dispatch(DishListStore.Message.ClearSelected)
-            dispatch(DishListStore.Message.UpdateRemovedItems(newRemoved))
+            dispatch(Message.ClearSelected)
+            dispatch(Message.UpdateRemovedItems(newRemoved))
         }
     }
 
     private suspend fun select(dishId: String) {
-        dispatch(DishListStore.Message.SelectDish(dishId = dishId, selected = true))
+        dispatch(Message.SelectDish(dishId = dishId, selected = true))
     }
 
     private suspend fun unSelect(dishId: String) {
-        dispatch(DishListStore.Message.SelectDish(dishId = dishId, selected = false))
+        dispatch(Message.SelectDish(dishId = dishId, selected = false))
     }
 
-    private suspend fun dispatch(message: DishListStore.Message) {
+    private suspend fun dispatch(message: Message) {
         withContext(mainDispatcher) {
             state = reducer.reduce(state, message)
         }

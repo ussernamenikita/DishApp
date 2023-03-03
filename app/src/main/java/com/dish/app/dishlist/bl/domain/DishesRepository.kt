@@ -1,4 +1,4 @@
-package com.dish.app.dishlist.bl.data
+package com.dish.app.dishlist.bl.domain
 
 import com.dish.app.dishlist.bl.domain.models.DishDescriptionDomainModel
 

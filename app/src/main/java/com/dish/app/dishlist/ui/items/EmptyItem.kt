@@ -10,11 +10,11 @@ import com.dish.app.uikit.extensions.context
 import com.xwray.groupie.viewbinding.BindableItem
 
 class EmptyItem(
-    @DimenRes private val height: Int,
+    @DimenRes private val itemHeight: Int,
 ) : BindableItem<DishListEmptyItemLayoutBinding>() {
     override fun bind(viewBinding: DishListEmptyItemLayoutBinding, position: Int) {
         viewBinding.root.updateLayoutParams<ViewGroup.LayoutParams> {
-            height = viewBinding.context.resources.getDimensionPixelSize(R.dimen.buttonHeight)
+            height = viewBinding.context.resources.getDimensionPixelSize(itemHeight)
         }
     }
 

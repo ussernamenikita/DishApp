@@ -7,7 +7,7 @@ import com.dish.app.dishlist.ui.items.DishListCardItem
 import com.dish.app.dishlist.ui.items.EmptyItem
 import com.dish.app.dishlist.ui.models.DishListCardItemUiModel
 import com.dish.app.dishlist.ui.models.DishListUiModel
-import com.dish.app.dishlist.ui.viewmodel.Model
+import com.dish.app.dishlist.ui.binder.Model
 import com.xwray.groupie.Item
 
 class StateToModelMapper {

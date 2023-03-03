@@ -1,38 +1,38 @@
 package com.dish.app.dishlist.ui.di
 
 import android.content.Context
-import com.dish.app.dishlist.bl.data.DishesRepository
+import com.dish.app.dishlist.bl.domain.DishesRepository
 import com.dish.app.dishlist.bl.data.DishesRepositoryImpl
 import com.dish.app.dishlist.bl.data.MockedDishDataStore
 import com.dish.app.dishlist.bl.data.RemovedDishIdsDataStoreSharedPreferenceImpl
 import com.dish.app.dishlist.bl.data.mapper.DishEntityToDescriptionDomainModelMapper
-import com.dish.app.dishlist.bl.domain.DishListStore
-import com.dish.app.dishlist.bl.domain.DishListStoreImpl
+import com.dish.app.dishlist.bl.domain.DishListExecutor
+import com.dish.app.dishlist.bl.domain.DishListExecutorImpl
 import com.dish.app.dishlist.bl.domain.DishReducerImpl
 import com.dish.app.dishlist.bl.domain.mappers.DishDescriptionToDishDomainModelMapper
 import com.dish.app.logger.LoggerImpl
 import com.dish.app.dishlist.ui.mappers.StateToModelMapper
-import com.dish.app.dishlist.ui.viewmodel.DishListViewModel
+import com.dish.app.dishlist.ui.binder.DishListBinder
 import kotlinx.coroutines.Dispatchers
 
 // TODO replace to some di framework
 object Injector {
 
-    fun createViewModel(context: Context): DishListViewModel {
-        return DishListViewModel(
+    fun createViewModel(context: Context): DishListBinder {
+        return DishListBinder(
             dishListStore = createDishListStore(context),
             stateToModelMapper = StateToModelMapper(),
         )
     }
 
-    private fun createDishListStore(context: Context): DishListStore {
-        return DishListStoreImpl(
+    private fun createDishListStore(context: Context): DishListExecutor {
+        return DishListExecutorImpl(
             dishesRepository = createDishesRepository(context),
             ioDispatcher = Dispatchers.IO,
             mainDispatcher = Dispatchers.Main.immediate,
             reducer = DishReducerImpl(),
             dishDescriptionToDishDomainModelMapper = DishDescriptionToDishDomainModelMapper(),
-            loggger = LoggerImpl()
+            logger = LoggerImpl()
         )
     }
 

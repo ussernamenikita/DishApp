@@ -4,22 +4,22 @@ class DishReducerImpl : DishReducer {
 
     override fun reduce(
         currentState: DishListState,
-        message: DishListStore.Message,
+        message: Message,
     ): DishListState {
         return when (message) {
-            is DishListStore.Message.UpdateRemovedItems -> updateRemoved(currentState, message)
-            is DishListStore.Message.SelectDish -> updateSelected(currentState, message)
-            is DishListStore.Message.UpdateAllDishes -> updateAllDishes(currentState, message)
-            DishListStore.Message.Loading -> setLoading(currentState)
-            is DishListStore.Message.Error -> setError(currentState, message)
-            DishListStore.Message.ClearSelected -> currentState.copy(selectedDishIds = emptySet())
-            DishListStore.Message.RemovingInProgress -> currentState.copy(removingInProgress = true)
+            is Message.UpdateRemovedItems -> updateRemoved(currentState, message)
+            is Message.SelectDish -> updateSelected(currentState, message)
+            is Message.UpdateAllDishes -> updateAllDishes(currentState, message)
+            Message.Loading -> setLoading(currentState)
+            is Message.Error -> setError(currentState, message)
+            Message.ClearSelected -> currentState.copy(selectedDishIds = emptySet())
+            Message.RemovingInProgress -> currentState.copy(removingInProgress = true)
         }
     }
 
     private fun setError(
         currentState: DishListState,
-        message: DishListStore.Message.Error,
+        message: Message.Error,
     ): DishListState {
         return currentState.copy(dishesList = null, error = message.error, isLoading = false)
     }
@@ -34,7 +34,7 @@ class DishReducerImpl : DishReducer {
 
     private fun updateAllDishes(
         currentState: DishListState,
-        message: DishListStore.Message.UpdateAllDishes,
+        message: Message.UpdateAllDishes,
     ): DishListState {
         return currentState.copy(
             dishesList = message.dishesDomainModels,
@@ -45,7 +45,7 @@ class DishReducerImpl : DishReducer {
 
     private fun updateSelected(
         currentState: DishListState,
-        message: DishListStore.Message.SelectDish,
+        message: Message.SelectDish,
     ): DishListState {
         val newSelected = currentState
             .selectedDishIds
@@ -62,7 +62,7 @@ class DishReducerImpl : DishReducer {
 
     private fun updateRemoved(
         state: DishListState,
-        message: DishListStore.Message.UpdateRemovedItems,
+        message: Message.UpdateRemovedItems,
     ): DishListState {
         val newRemoved = message.newRemoved
         val newDishesList = state.dishesList?.map {

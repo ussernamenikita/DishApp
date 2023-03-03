@@ -1,11 +1,11 @@
-package com.dish.app.dishlist.ui.viewmodel
+package com.dish.app.dishlist.ui.binder
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.dish.app.dishlist.ui.di.Injector
 
-class DishListViewModelFactory(context: Context) : ViewModelProvider.Factory {
+class DishListBinderFactory(context: Context) : ViewModelProvider.Factory {
 
     private val appContext = context.applicationContext
 

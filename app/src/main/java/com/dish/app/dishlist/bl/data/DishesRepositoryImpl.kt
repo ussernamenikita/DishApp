@@ -1,6 +1,7 @@
 package com.dish.app.dishlist.bl.data
 
 import com.dish.app.dishlist.bl.data.mapper.DishEntityToDescriptionDomainModelMapper
+import com.dish.app.dishlist.bl.domain.DishesRepository
 import com.dish.app.dishlist.bl.domain.models.DishDescriptionDomainModel
 
 class DishesRepositoryImpl(

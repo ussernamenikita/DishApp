@@ -35,7 +35,7 @@ class DishListFragmentViewImpl(
 
     private val _intents: MutableLiveData<Intent?> = MutableLiveData(null)
 
-    val intents: LiveData<Intent?> = _intents
+    override val intents: LiveData<Intent?> = _intents
 
     private var isDeleteButtonVisibleNow: Boolean? = null
     private var currentButtonAnimation: Animator? = null
